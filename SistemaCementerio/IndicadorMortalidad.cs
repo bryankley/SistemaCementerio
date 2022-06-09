@@ -17,6 +17,7 @@ namespace SistemaCementerio
         string Causava;
         string PeriodoVa;
         string GeneroVa;
+        int NumeroCount;
         public IndicadorMortalidad()
         {
             InitializeComponent();
@@ -106,6 +107,8 @@ namespace SistemaCementerio
                         da.SelectCommand = cmd;
                         da.Fill(dt);
                         dataGridView1.DataSource = dt;
+                        NumeroCount = dt.Rows.Count;
+                        lbl_num.Text = Convert.ToString(NumeroCount);
                     }
                     else
                     {
@@ -118,8 +121,8 @@ namespace SistemaCementerio
                         da.SelectCommand = cmd;
                         da.Fill(dt);
                         dataGridView1.DataSource = dt;
-
-                      
+                        NumeroCount = dt.Rows.Count;
+                        lbl_num.Text = Convert.ToString(NumeroCount);
                     }
 
 
@@ -145,19 +148,41 @@ namespace SistemaCementerio
             {
                 using (SqlConnection Conector = new SqlConnection(conString))
                 {
-                    Conector.Open();
-                    DataTable dt = new DataTable();
-                    string query = @"Select DISTINCT mes,edad from V_Fallecimiento";
-                    SqlCommand cmd = new SqlCommand(query, Conector);
-                    SqlDataReader da = cmd.ExecuteReader();
-                    while (da.Read())
+                    if ((bool)chk_todo.Checked)
                     {
-                        Mes.Add(da.GetString(0));
-                        Anio.Add(da.GetInt32(1));
+                        Conector.Open();
+                        DataTable dt = new DataTable();
+                        string query = @"Select  mes,sum(edad )from V_Fallecimiento group by mes ";
+                        SqlCommand cmd = new SqlCommand(query, Conector);
+                        SqlDataReader da = cmd.ExecuteReader();
+                        while (da.Read())
+                        {
+                            Mes.Add(da.GetString(0));
+                            Anio.Add(da.GetInt32(1));
+                        }
+                        Char_Periodo.Series[0].Points.DataBindXY(Mes, Anio);
+                        da.Close();
+                        Conector.Close();
                     }
-                    Char_Periodo.Series[0].Points.DataBindXY(Mes, Anio);
-                    da.Close();
-                    Conector.Close();
+                    else
+                    {
+                        Conector.Open();
+                        DataTable dt = new DataTable();
+                        string query = @"Select DISTINCT mes,edad from V_Fallecimiento where anio ='" + PeriodoVa + "' and sexo='" + GeneroVa + "' and causafallecimiento='" + Causava + "' ";
+                        SqlCommand cmd = new SqlCommand(query, Conector);
+                        SqlDataReader da = cmd.ExecuteReader();
+                        while (da.Read())
+                        {
+                            Mes.Add(da.GetString(0));
+                            Anio.Add(da.GetInt32(1));
+                        }
+                        Char_Periodo.Series[0].Points.DataBindXY(Mes, Anio);
+                        da.Close();
+                        Conector.Close();
+                    }
+
+
+                   
 
 
                 }
@@ -230,163 +255,9 @@ namespace SistemaCementerio
         {
             Conexion();
             CargarGrafico();
-            //conteoPeriodo();
         }
 
 
-
-        //private void conteoPeriodo()
-        //{
-
-        //    PeriodoVa = cmb_periodo.Text;
-        //    var conString = ConfigurationManager.ConnectionStrings["BaseSqlServer"].ConnectionString;
-        //    dataGridView1.AllowUserToAddRows = false;
-        //    try
-        //    {
-        //        using (SqlConnection Conector = new SqlConnection(conString))
-        //        {
-        //            Conector.Open();
-        //            DataTable dt = new DataTable();
-        //            string query = @"Select count(*) from DimTime where anio ='" + PeriodoVa + "' ";
-        //            SqlCommand cmd = new SqlCommand(query, Conector);
-        //            SqlDataAdapter da = new SqlDataAdapter(cmd);
-        //            da.SelectCommand = cmd;
-        //            da.Fill(dt);
-        //            //lbl_total.Text = dt;
-
-
-
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        MessageBox.Show(ex.Message);
-        //    }
-
-        //}
-        //private void cargarComboCausa()
-        //{
-        //    var conString = ConfigurationManager.ConnectionStrings["BaseSqlServer"].ConnectionString;
-        //    using (SqlConnection Conector = new SqlConnection(conString))
-        //    {
-        //        Conector.Open();
-        //        string query = @"Select DISTINCT  CausaFallecimiento from Dim_CausaFallecimiento";
-        //        SqlCommand cmd = new SqlCommand(query, Conector);
-        //        SqlDataReader da = cmd.ExecuteReader();
-        //        while (da.Read())
-        //        {
-        //            cmb_CausaMuerte.Items.Add(da[0].ToString());
-
-        //        }
-        //        Conector.Close();
-
-        //        CargarCausa();
-
-
-
-        //    }
-        //}
-        //private void CargarCausa()
-        //{
-        //    Causava = cmb_CausaMuerte.Text;
-        //    var conString = ConfigurationManager.ConnectionStrings["BaseSqlServer"].ConnectionString;
-        //    try
-        //    {
-        //        using (SqlConnection Conector = new SqlConnection(conString))
-        //        {
-        //            Conector.Open();
-        //            DataTable dt = new DataTable();
-        //            string query = @"Select * from Dim_CausaFallecimiento where CausaFallecimiento='" + Causava + "' ";
-        //            SqlCommand cmd = new SqlCommand(query, Conector);
-
-        //            SqlDataAdapter da = new SqlDataAdapter(cmd);
-        //            da.SelectCommand = cmd;
-        //            da.Fill(dt);
-
-
-
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        MessageBox.Show(ex.Message);
-        //    }
-        //}
-        //ArrayList causa = new ArrayList();
-        //ArrayList ciudad = new ArrayList();
-
-
-        //private void CargarGraficoCausa()
-        //{
-        //    var conString = ConfigurationManager.ConnectionStrings["BaseSqlServer"].ConnectionString;
-        //    try
-        //    {
-        //        using (SqlConnection Conector = new SqlConnection(conString))
-        //        {
-        //            Conector.Open();
-        //            DataTable dt = new DataTable();
-        //            string query = @"Select * from CausaFallecimiento";
-        //            SqlCommand cmd = new SqlCommand(query, Conector);
-        //            SqlDataReader da = cmd.ExecuteReader();
-        //            while (da.Read())
-        //            {
-        //                causa.Add(da.GetInt32(0));
-        //                ciudad.Add(da.GetString(1));
-        //            }
-        //            //char_Causa.Series[0].Points.DataBindXY(causa, ciudad);
-        //            da.Close();
-        //            Conector.Close();
-
-
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        MessageBox.Show(ex.Message);
-        //    }
-        //}
-
-        //private void CargarDataGridGenero()
-        //{
-        //    GeneroVa = Cmb_Genero.Text;
-        //    var conString = ConfigurationManager.ConnectionStrings["BaseSqlServer"].ConnectionString;
-
-        //    try
-        //    {
-        //        using (SqlConnection Conector = new SqlConnection(conString))
-        //        {
-        //            Conector.Open();
-        //            DataTable dt = new DataTable();
-        //            string query = @"Select * from Dim_genero where sexo='" + GeneroVa + "' ";
-        //            SqlCommand cmd = new SqlCommand(query, Conector);
-        //            SqlDataAdapter da = new SqlDataAdapter(cmd);
-        //            da.SelectCommand = cmd;
-        //            da.Fill(dt);
-
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        MessageBox.Show(ex.Message);
-        //    }
-        //}
-
-       
-
-        //private void btn_BusquedaSexo_Click(object sender, EventArgs e)
-        //{
-        //    CargarDataGridGenero();
-        //}
-
-        //private void Btn_BuscarCausa_Click(object sender, EventArgs e)
-        //{
-        //    CargarCausa();
-        //    CargarGraficoCausa();
-        //}
 
 
     }

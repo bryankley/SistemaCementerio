@@ -35,11 +35,13 @@ namespace SistemaCementerio
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(IndicadorMortalidad));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.lbl_num = new System.Windows.Forms.Label();
+            this.Char_Periodo = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chk_todo = new System.Windows.Forms.CheckBox();
             this.label10 = new System.Windows.Forms.Label();
             this.Cmb_Genero = new System.Windows.Forms.ComboBox();
             this.cmb_CausaMuerte = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.Char_Periodo = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.lbl_total = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -50,7 +52,7 @@ namespace SistemaCementerio
             this.label3 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
-            this.chk_todo = new System.Windows.Forms.CheckBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Char_Periodo)).BeginInit();
@@ -70,12 +72,14 @@ namespace SistemaCementerio
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.Controls.Add(this.label5);
+            this.tabPage1.Controls.Add(this.lbl_num);
+            this.tabPage1.Controls.Add(this.Char_Periodo);
             this.tabPage1.Controls.Add(this.chk_todo);
             this.tabPage1.Controls.Add(this.label10);
             this.tabPage1.Controls.Add(this.Cmb_Genero);
             this.tabPage1.Controls.Add(this.cmb_CausaMuerte);
             this.tabPage1.Controls.Add(this.label9);
-            this.tabPage1.Controls.Add(this.Char_Periodo);
             this.tabPage1.Controls.Add(this.lbl_total);
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.pictureBox1);
@@ -91,6 +95,44 @@ namespace SistemaCementerio
             this.tabPage1.Size = new System.Drawing.Size(814, 352);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Mortalidad por Periodo";
+            // 
+            // lbl_num
+            // 
+            this.lbl_num.AutoSize = true;
+            this.lbl_num.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_num.Location = new System.Drawing.Point(639, 52);
+            this.lbl_num.Name = "lbl_num";
+            this.lbl_num.Size = new System.Drawing.Size(0, 20);
+            this.lbl_num.TabIndex = 18;
+            // 
+            // Char_Periodo
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.Char_Periodo.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.Char_Periodo.Legends.Add(legend1);
+            this.Char_Periodo.Location = new System.Drawing.Point(513, 139);
+            this.Char_Periodo.Name = "Char_Periodo";
+            this.Char_Periodo.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.EarthTones;
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.Char_Periodo.Series.Add(series1);
+            this.Char_Periodo.Size = new System.Drawing.Size(271, 205);
+            this.Char_Periodo.TabIndex = 17;
+            this.Char_Periodo.Text = "chart1";
+            // 
+            // chk_todo
+            // 
+            this.chk_todo.AutoSize = true;
+            this.chk_todo.Checked = true;
+            this.chk_todo.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chk_todo.Location = new System.Drawing.Point(426, 45);
+            this.chk_todo.Name = "chk_todo";
+            this.chk_todo.Size = new System.Drawing.Size(85, 17);
+            this.chk_todo.TabIndex = 16;
+            this.chk_todo.Text = "Mostrar todo";
+            this.chk_todo.UseVisualStyleBackColor = true;
             // 
             // label10
             // 
@@ -130,27 +172,6 @@ namespace SistemaCementerio
             this.label9.TabIndex = 12;
             this.label9.Text = "Causa de Muerte";
             // 
-            // Char_Periodo
-            // 
-            chartArea1.Name = "ChartArea1";
-            this.Char_Periodo.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.Char_Periodo.Legends.Add(legend1);
-            this.Char_Periodo.Location = new System.Drawing.Point(508, 139);
-            this.Char_Periodo.Name = "Char_Periodo";
-            this.Char_Periodo.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
-            series1.IsValueShownAsLabel = true;
-            series1.IsXValueIndexed = true;
-            series1.LabelForeColor = System.Drawing.Color.White;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.Char_Periodo.Series.Add(series1);
-            this.Char_Periodo.Size = new System.Drawing.Size(287, 184);
-            this.Char_Periodo.TabIndex = 11;
-            this.Char_Periodo.Text = "chart1";
-            // 
             // lbl_total
             // 
             this.lbl_total.AutoSize = true;
@@ -164,7 +185,7 @@ namespace SistemaCementerio
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(530, 95);
+            this.label2.Location = new System.Drawing.Point(579, 52);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(54, 20);
             this.label2.TabIndex = 9;
@@ -184,7 +205,7 @@ namespace SistemaCementerio
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(152, 7);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(494, 39);
+            this.label4.Size = new System.Drawing.Size(487, 39);
             this.label4.TabIndex = 7;
             this.label4.Text = "Muestra  el total de fallecidos por el Año seleccionado.";
             // 
@@ -220,11 +241,11 @@ namespace SistemaCementerio
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(196, 113);
+            this.label3.Location = new System.Drawing.Point(167, 112);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(46, 20);
+            this.label3.Size = new System.Drawing.Size(75, 20);
             this.label3.TabIndex = 3;
-            this.label3.Text = "Año:";
+            this.label3.Text = "Periodo:";
             // 
             // dataGridView1
             // 
@@ -243,17 +264,14 @@ namespace SistemaCementerio
             this.label1.TabIndex = 1;
             this.label1.Text = "Indicador de Mortalidad";
             // 
-            // chk_todo
+            // label5
             // 
-            this.chk_todo.AutoSize = true;
-            this.chk_todo.Checked = true;
-            this.chk_todo.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chk_todo.Location = new System.Drawing.Point(426, 45);
-            this.chk_todo.Name = "chk_todo";
-            this.chk_todo.Size = new System.Drawing.Size(85, 17);
-            this.chk_todo.TabIndex = 16;
-            this.chk_todo.Text = "Mostrar todo";
-            this.chk_todo.UseVisualStyleBackColor = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(510, 115);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(216, 26);
+            this.label5.TabIndex = 19;
+            this.label5.Text = "Indicador por Mes y edad";
             // 
             // IndicadorMortalidad
             // 
@@ -289,12 +307,14 @@ namespace SistemaCementerio
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lbl_total;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DataVisualization.Charting.Chart Char_Periodo;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ComboBox Cmb_Genero;
         private System.Windows.Forms.ComboBox cmb_CausaMuerte;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.CheckBox chk_todo;
+        private System.Windows.Forms.DataVisualization.Charting.Chart Char_Periodo;
+        private System.Windows.Forms.Label lbl_num;
+        private System.Windows.Forms.Label label5;
     }
 }
 
